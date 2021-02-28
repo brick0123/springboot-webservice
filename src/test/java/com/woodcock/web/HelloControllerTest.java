@@ -6,22 +6,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.woodcock.config.auth.SecurityConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest
+@WebMvcTest(controllers = HelloController.class,
+    excludeFilters = {
+    @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+})
 class HelloControllerTest {
 
   @Autowired
   MockMvc mvc;
 
   @Test
+  @WithMockUser(roles = "USER")
   @DisplayName("hello가 return 된다")
   void hello_return() throws Exception {
     String hello = "hello";
@@ -32,6 +40,7 @@ class HelloControllerTest {
   }
 
   @Test
+  @WithMockUser(roles = "USER")
   @DisplayName("helloResponseDto가 return 된다")
   void helloDto_return() throws Exception {
     String name = "hello";

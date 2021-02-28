@@ -1,5 +1,7 @@
 package com.woodcock.web;
 
+import com.woodcock.config.LoginUser;
+import com.woodcock.config.auth.dto.SessionUser;
 import com.woodcock.service.posts.PostsService;
 import com.woodcock.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +17,13 @@ public class IndexController {
   private final PostsService postsService;
 
   @GetMapping("/")
-  public String index(Model model) {
+  public String index(Model model, @LoginUser SessionUser user) {
     model.addAttribute("posts", postsService.findAllByDesc());
+
+    if (user != null) {
+      model.addAttribute("userName", user.getName());
+    }
+
     return "index";
   }
 
