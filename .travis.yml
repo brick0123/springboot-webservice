@@ -13,6 +13,22 @@ cache:
 
 script: "./gradlew clean build"
 
+before_deploy: # CodeDeploy는 jar 파일을 인식하지 못하므로 기타 설정들과 압축
+  - zip -r springboot-webservice *
+  - mkdir -p deploy
+  - mv springboot-webservice.zip deploy/springboot-webservice.zip
+
+deploy:
+  - provicer: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: freelec-springboot-build22
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private
+    local_dir: deploy # 해당 위치의 파일들만 s3로 전송
+    wait-until-deploy: true
+
 notifications:
   email:
     recipients:
