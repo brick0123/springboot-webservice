@@ -16,3 +16,15 @@ spring:
       enabled: true
   profiles:
     include: oauth
+---
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mariadb://springboot-webservice2.cxs8x3f3wh7t.ap-northeast-2.rds.amazonaws.com:3306/springboot_webservice
+      username: jinho
+      password: aktnf498
+      driver-class-name: org.mariadb.jdbc.Driver
+
