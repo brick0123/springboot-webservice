@@ -4,6 +4,7 @@ plugins { // (1)
     id 'java'
 }
 
+version '1.0.1-SNAPSHOT'
 group 'com.woodcock'
 sourceCompatibility = 1.8
 
