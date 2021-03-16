@@ -4,7 +4,7 @@ plugins { // (1)
     id 'java'
 }
 
-version '1.0.1-SNAPSHOT'
+version '1.0.1-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss")
 group 'com.woodcock'
 sourceCompatibility = 1.8
 
